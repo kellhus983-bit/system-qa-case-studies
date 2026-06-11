@@ -33,6 +33,20 @@ Methodological aspects demonstrated:
 
 ➡️ [Read Case Study](cases/staticaccod-traffic-coloring.md)
 
+### Deployment Failures During Initial Integration of a New System Component
+
+Investigation of deployment, configuration and startup failures discovered during the first integration of a new distributed system component.
+
+Methodological aspects demonstrated:
+
+- Requirements reconstruction
+- System dependency analysis
+- System modeling
+- Root cause investigation
+- Integration testing strategy
+
+➡️ [Read Case Study](cases/net_decoder-integration-failures.md)
+
 ---
 
 ## Methodology
