@@ -1,38 +1,51 @@
 # System QA Case Studies
 
-This repository contains anonymized engineering case studies based on real-world experience in telecommunications and Linux-based systems.
+This repository contains anonymized engineering case studies and methodology notes based on real-world experience investigating distributed systems.
 
-The materials focus on:
-
-- Requirements Analysis
-- System Modeling
-- Root Cause Investigation
-- Production Incident Analysis
-- Component Interaction Analysis
-- Testing Strategy Design
-
-The goal of this repository is to demonstrate how testing approaches evolve through hypothesis building, contradiction analysis, evidence collection, system model revision and testing strategy refinement.
-
-## Current Case Studies
+## Case Studies
 
 ### Static Accounting Failure in a Traffic Coloring Environment
 
-A case study describing investigation of a production issue caused by undocumented service dependencies in a distributed telecom system.
+Investigation of subscriber identification propagation issues caused by an undocumented service dependency.
 
 Topics covered:
 
 - Requirements Analysis
-- Documentation Analysis
+- System Modeling
+- Data Entity Analysis
 - Root Cause Investigation
-- Component Interaction Analysis
-- Testing Strategy Revision
 
-## Planned Materials
+➡️ [Read Case Study](cases/staticaccod-traffic-coloring.md)
 
-- Requirements Analysis in Poorly Documented Systems
-- Reconstructing Business Logic from Documentation
-- Production Incident Investigation
-- Interface Testing Strategy
-- Data Flow Analysis
-- Defect Investigation Methodology
-- System Modeling for QA Engineers
+---
+
+## Methodology
+
+### System Modeling
+
+Building and refining working models of distributed systems.
+
+➡️ [Read](methodology/system-modeling.md)
+
+### Data Entity Analysis
+
+Analyzing information lifecycles across system components.
+
+➡️ [Read](methodology/data-entity-analysis.md)
+
+### Requirements Analysis
+
+Reconstructing expected behavior from incomplete information.
+
+➡️ [Read](methodology/requirements-analysis.md)
+
+---
+
+## Common Investigation Pattern
+
+Requirements Reconstruction
+→ System Modeling
+→ Data Entity Analysis
+→ Contradiction Identification
+→ Model Revision
+→ Testing Strategy Improvement
