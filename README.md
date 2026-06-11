@@ -1,21 +1,23 @@
 # System QA Case Studies
 
-This repository contains anonymized engineering case studies based on real-world experience in:
+This repository contains anonymized engineering case studies based on real-world experience in telecommunications and Linux-based systems.
 
-- System Testing
-- Linux-based Applications
-- Telecommunications Systems
-- Production Incident Investigation
+The materials focus on:
+
 - Requirements Analysis
-- Defect Investigation
+- System Modeling
+- Root Cause Investigation
+- Production Incident Analysis
+- Component Interaction Analysis
+- Testing Strategy Design
 
-The purpose of this repository is to demonstrate engineering thinking, investigation techniques and testing methodologies used when working with complex distributed systems.
+The goal of this repository is to demonstrate how testing approaches evolve through hypothesis building, contradiction analysis, evidence collection, system model revision and testing strategy refinement.
 
 ## Current Case Studies
 
 ### Static Accounting Failure in a Traffic Coloring Environment
 
-Investigation of a production issue involving service dependencies, accounting session generation and traffic coloring mechanisms.
+A case study describing investigation of a production issue caused by undocumented service dependencies in a distributed telecom system.
 
 Topics covered:
 
@@ -33,3 +35,4 @@ Topics covered:
 - Interface Testing Strategy
 - Data Flow Analysis
 - Defect Investigation Methodology
+- System Modeling for QA Engineers
