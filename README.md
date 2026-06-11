@@ -1,3 +1,13 @@
+## How to Read This Repository
+
+Start with the case study to see a practical investigation example.
+
+Then read the methodology notes to understand the approaches used in the analysis:
+
+1. System Modeling
+2. Data Entity Analysis
+3. Requirements Analysis
+   
 # System QA Case Studies
 
 This repository contains anonymized engineering case studies and methodology notes based on real-world experience investigating distributed systems.
