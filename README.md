@@ -18,18 +18,21 @@ Then review the methodology notes to understand the approaches used during the a
 
 ## Case Studies
 
-### Static Accounting Failure in a Traffic Coloring Environment
+Static Accounting Failure in a Traffic Coloring Environment
 
-Investigation of subscriber identification propagation issues caused by an undocumented service dependency.
+Investigation of subscriber identification failures in a distributed traffic processing platform using static accounting and traffic classification mechanisms.
 
-This case demonstrates how an investigation can progress from an observed production symptom to a revised system model and an improved testing strategy.
+The issue manifested as missing subscriber identity information in exported records despite successful traffic processing and apparently healthy system components.
+
+The investigation focused on reconstruction of information flow, analysis of service dependencies and revision of the system model to identify an undocumented initialization dependency affecting business functionality.
 
 Methodological aspects demonstrated:
 
-* Requirements reconstruction from incomplete sources
-* System model revision
-* Data entity lifecycle analysis
-* Root cause investigation
+Requirements reconstruction from incomplete sources
+System model revision
+Data entity lifecycle analysis
+Service dependency analysis
+Root cause investigation
 
 ➡️ [Read Case Study](cases/staticaccod-traffic-coloring.md)
 
