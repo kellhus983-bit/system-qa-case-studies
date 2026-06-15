@@ -36,17 +36,23 @@ Root cause investigation
 
 ➡️ [Read Case Study](cases/staticaccod-traffic-coloring.md)
 
-### Deployment Failures During Initial Integration of a New System Component
+### Investigating System Dependencies During Introduction of a New Platform Component
 
-Investigation of deployment, configuration and startup failures discovered during the first integration of a new distributed system component.
+Investigation of deployment, configuration and runtime failures discovered during the introduction of a new component into a distributed data processing platform.
+
+The component relied on multiple dependent services, shared infrastructure resources and automatically generated configuration. Although deployment appeared successful, a series of independent failures revealed undocumented constraints affecting initialization, resource allocation and component interaction.
+
+The investigation required reconstruction of system behavior from incomplete documentation, analysis of service dependencies and validation of architectural assumptions.
 
 Methodological aspects demonstrated:
 
-- Requirements reconstruction
-- System dependency analysis
-- System modeling
-- Root cause investigation
-- Integration testing strategy
+* Requirements reconstruction from incomplete documentation
+* Dependency analysis
+* Configuration validation
+* Root cause investigation
+* System model refinement
+* Deployment and integration testing
+* Cross-team knowledge reconstruction
 
 ➡️ [Read Case Study](cases/net_decoder-integration-failures.md)
 
