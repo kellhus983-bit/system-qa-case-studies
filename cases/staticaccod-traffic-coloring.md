@@ -1,16 +1,50 @@
-# Case Study: Revising a System Model During Investigation of a Distributed System Failure
+# Case Study: Static Accounting Failure in a Traffic Coloring Environment
 
 ## Context
 
 A production issue was reported by the deployment team.
 
-Subscriber identification information was expected to be propagated through several interacting services and appear in exported records used by downstream systems.
+In a specific deployment scenario, subscriber identification information was expected to be associated with intercepted network traffic and appear in exported records consumed by downstream systems.
 
 Although traffic processing appeared to function correctly, subscriber identification data was missing from the final output.
 
-The issue occurred only in a specific deployment scenario involving multiple interacting components.
-
 The objective of the investigation was to determine where information was being lost and why the observed behavior contradicted the expected system model.
+
+---
+
+## Business Function
+
+The investigated platform was responsible for processing network traffic and associating it with subscriber identities.
+
+The resulting records were used for downstream analysis and reporting.
+
+For the platform to produce meaningful results, traffic information and subscriber identification data had to be successfully combined during processing.
+
+Loss of subscriber identification information at any stage resulted in incomplete exported records despite otherwise successful traffic processing.
+
+---
+
+## Feature Under Investigation
+
+The investigated feature provided subscriber identification for users with static network addressing.
+
+The feature relied on two cooperating mechanisms:
+
+* generation of synthetic subscriber accounting information;
+* traffic classification based on network attributes.
+
+Subscriber accounting information was generated independently and later consumed during traffic classification and processing.
+
+Traffic classification mechanisms relied on subscriber accounting information to associate classified traffic with subscriber identities.
+
+The expected information flow was:
+
+Subscriber Accounting Information
+→ Traffic Classification
+→ Subscriber Association
+→ Exported Record
+
+Correct operation therefore depended on successful propagation of subscriber accounting information across multiple interacting services.
 
 ---
 
@@ -18,13 +52,28 @@ The objective of the investigation was to determine where information was being 
 
 At the beginning of the investigation, the following assumptions were made:
 
-1. Subscriber identification information was generated correctly.
+1. Subscriber accounting information was generated correctly.
 2. Required services were operational.
-3. Data was transferred successfully between components.
-4. Traffic processing mechanisms consumed identification data during processing.
-5. Successful processing should result in correctly populated output records.
+3. Subscriber information was transferred successfully between components.
+4. Traffic classification mechanisms consumed subscriber information during processing.
+5. Successful traffic processing should result in correctly populated exported records.
 
 Under this model, normal service operation should have produced the expected business outcome.
+
+---
+
+## Key Data Entity
+
+The key information entity investigated during this analysis was subscriber identification data.
+
+The investigation focused on:
+
+* where this information was generated;
+* how it was propagated;
+* which services consumed it;
+* how its availability affected downstream processing.
+
+The failure ultimately proved to be not a traffic processing problem but an information propagation problem.
 
 ---
 
@@ -36,8 +85,8 @@ The following observations were made:
 
 * all relevant services started successfully;
 * no critical errors were reported in logs;
-* processing pipelines appeared operational;
-* output records were generated;
+* traffic classification appeared operational;
+* exported records were generated;
 * subscriber identification data was absent from the final result.
 
 The infrastructure appeared healthy while the business requirement was not satisfied.
@@ -77,10 +126,11 @@ The investigation then shifted from component status to information movement.
 
 The following questions were examined:
 
-* Where is the information created?
+* Where is subscriber information created?
 * How is it transferred?
 * Which component consumes it?
-* At what point can it be lost or become unavailable?
+* At what point can it become unavailable?
+* How does its availability affect downstream processing?
 
 ### Dependency Analysis
 
@@ -94,7 +144,7 @@ The investigation revealed that successful processing depended on a startup sequ
 
 The analysis demonstrated that system behavior depended not only on configuration correctness but also on service initialization order.
 
-A previously undocumented dependency influenced information availability during processing.
+A previously undocumented dependency influenced the availability of subscriber accounting information during processing.
 
 As a result, infrastructure health alone was insufficient to guarantee correct business behavior.
 
@@ -106,9 +156,9 @@ The original model was therefore revised to include service dependency relations
 
 The issue was ultimately traced to an undocumented dependency between interacting services.
 
-The dependency affected information availability during processing and was not enforced by the deployment configuration.
+The dependency affected the availability of subscriber accounting information and was not enforced by the deployment configuration.
 
-As a result, all components appeared operational while the expected business outcome could not be achieved.
+As a result, traffic processing and classification appeared operational while subscriber identification could not be completed successfully.
 
 ---
 
@@ -125,7 +175,7 @@ Previously, testing focused primarily on:
 Following the investigation, additional activities became mandatory:
 
 1. Explicit validation of architectural assumptions.
-2. Dependency analysis between interacting components.
+2. Dependency analysis between interacting services.
 3. Data flow reconstruction across the system.
 4. Verification of initialization constraints.
 5. Continuous refinement of the system model based on observed behavior.
