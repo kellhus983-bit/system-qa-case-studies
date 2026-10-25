@@ -296,15 +296,19 @@ Instead, it had to be analyzed as part of a larger distributed system whose beha
 
 ## Root Causes
 
-The investigation identified several independent causes contributing to the observed failures:
+The investigation identified several contributing causes and integration constraints:
 
-* invalid configuration structures;
-* incorrect resource mappings;
-* export initialization failures;
-* conflicts involving shared infrastructure resources;
-* incomplete documentation describing required constraints.
+- Invalid configuration structures affecting service initialization.
+- Incorrect resource mappings and allocation conflicts between services operating in isolated DPDK-based environments.
+- Conflicting ownership or initialization of virtual network resources, including an attempt to use an already occupied resource.
+- Incomplete documentation of resource allocation requirements and dependencies between components.
+- Incompatibility of the newly introduced service with the platform's requirements for concurrent operation and resource isolation.
 
-The failures originated from different architectural layers and could not be explained by a single defect.
+The export module initialization failure was a consequence of the identified resource initialization problems rather than an independent root cause.
+
+The established inter-module data transfer protocol was not identified as a source of failure.
+
+The failures involved multiple architectural layers and could not be attributed to deployment execution alone.
 
 ---
 
