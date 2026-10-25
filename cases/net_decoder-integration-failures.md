@@ -268,7 +268,7 @@ System-call tracing also confirmed an attempt to use an already occupied resourc
 
 **Conclusion**
 
-The export module initialization failure was associated with the resource conflicts identified during integration testing.
+The export module initialization failure was associated with the resource initialization problems identified during integration testing. The available evidence did not establish it as an independent root cause.
 
 The problem was therefore investigated as part of the service's resource initialization and integration behavior, rather than as an independent database or data export failure.
 
