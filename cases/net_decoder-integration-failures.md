@@ -145,6 +145,98 @@ Because documentation could not fully explain the observed behavior, consultatio
 The goal was not simply to obtain answers but to reconstruct missing architectural knowledge and validate assumptions about system behavior.
 
 ---
+### Technical Investigation: Resource Conflicts in Isolated DPDK Environments
+### Technical Investigation: Resource Conflicts in Isolated DPDK Environments
+
+**Initial failure**
+
+During integration testing, two services failed to operate concurrently, despite the requirement that both should function simultaneously.
+
+Application and system logs indicated failures during resource initialization.
+
+**1. Initial diagnostics**
+
+The investigation began with analysis of application logs and Linux system journals using `journalctl`.
+
+The collected observations pointed to resource initialization failures rather than a general deployment failure.
+
+**2. Requirements and deployment verification**
+
+The expected behavior of the new service was clarified through discussions with its developers.
+
+The deployment engineering team was consulted to verify whether the installation procedure and generated configuration followed the requirements provided by the service development team.
+
+This verification confirmed that the deployment procedure had followed the supplied installation requirements.
+
+The investigation therefore shifted from deployment execution toward the compatibility of the services' runtime resource requirements.
+
+**3. Isolation testing**
+
+To identify the conditions triggering the failure, both services were tested independently and concurrently.
+
+| Test configuration | Observed result |
+|---|---|
+| Service A running independently | Successful initialization |
+| Service B running independently | Successful initialization |
+| Both services running concurrently | Initialization failure |
+
+The results demonstrated that each service could operate independently, while concurrent operation consistently exposed the failure.
+
+This narrowed the investigation to resource conflicts arising during integration.
+
+**4. DPDK resource allocation analysis**
+
+Further analysis of the service logs identified overlapping resource assignments involving the same CPU core.
+
+The services operated in isolated DPDK-based processing environments designed for high-performance traffic processing.
+
+Under the platform's resource isolation model, the conflicting resources were not available for simultaneous independent use by both services.
+
+The integration did not provide a mechanism for coordinating access to those resources.
+
+Consequently, resource assignments that were individually valid became incompatible when the services were started together.
+
+**5. System-call tracing**
+
+Additional investigation revealed that both services referenced the same virtual network interface.
+
+Linux `strace` was used to examine the failing process and identify the point of failure during virtual interface initialization.
+
+The system-call trace established that the operation attempted to use a resource that was already occupied.
+
+This observation was consistent with the interface being in use by the other service.
+
+The exact system-call name, error code, and process termination signal are not reproduced because the original trace is unavailable.
+
+**6. Findings**
+
+The investigation established the following:
+
+- Both services could initialize successfully when tested independently.
+- Concurrent execution reproduced the initialization failure.
+- Application logs revealed overlapping resource usage.
+- CPU resource assignments conflicted with the platform's isolation requirements.
+- System-call tracing confirmed an attempt to use an already occupied resource during virtual interface initialization.
+- Deployment verification showed that the installation procedure followed the requirements supplied to the deployment team.
+
+The evidence demonstrated integration-level resource conflicts that were not detected by individual service validation or successful deployment.
+
+The CPU allocation conflict and virtual interface conflict were observed during the same investigation. Their exact internal causal relationship is not asserted here.
+
+**7. Impact on integration testing**
+
+The findings established the need for additional integration checks:
+
+- Verify resource allocation across all concurrently running services.
+- Validate CPU assignments against the platform's resource isolation model.
+- Test services both independently and concurrently.
+- Distinguish deployment correctness from runtime resource compatibility.
+- Use system-call tracing when application logs are insufficient to localize initialization failures.
+- Verify architectural assumptions with the responsible development teams.
+
+**Confidentiality**
+
+The case study omits internal component names, production configuration, network topology, CPU identifiers, interface identifiers, and original diagnostic traces.
 
 ## Revised System Model
 
