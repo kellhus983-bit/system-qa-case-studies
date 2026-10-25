@@ -103,4 +103,4 @@ Together they provide the foundation for meaningful testing.
 
 ## Related Case Studies
 
-- [Static Accounting Failure in a Traffic Coloring Environment](../cases/staticaccod-traffic-coloring.md)
+- [Integration Failure in a Network Traffic Processing Platform](../cases/traffic-processing-integration-failure.md)
