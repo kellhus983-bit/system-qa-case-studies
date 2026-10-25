@@ -1,70 +1,44 @@
 System QA Case Studies
-This repository contains anonymized engineering case studies and methodology notes based on practical investigations of distributed network and telecommunications systems.
-
-The focus is on system and integration testing, Linux-based diagnostics, requirements reconstruction, controlled reproduction of failures, and evidence-based fault isolation.
-
-The case studies describe actual investigation methods and confirmed findings. Product-specific implementation details, proprietary commands, and production data are intentionally excluded.
+Practical, anonymized investigations of integration failures in distributed network traffic processing systems. The focus is on evidence-based diagnosis, requirements reconstruction, Linux troubleshooting, and validation of component interactions.
 Case Studies
-1. Network Traffic Processing: Integration Failure and Missing Identification Metadata
-[Read the case study](cases/traffic-processing-integration-failure.md)
-
-Problem: A production traffic processing platform generated output records without required identification metadata, despite processing incoming traffic.
-
-Investigation:
-- Reviewed support-provided incident evidence, captured traffic, configuration, logs, and system diagnostics.
-- Reconstructed incomplete integration requirements and component interactions through documentation research and developer consultation.
-- Prepared a working laboratory environment, resolving separate initialization and configuration issues.
-- Reproduced the production defect using generated test traffic.
-- Correlated application logs, an internal Linux-based diagnostic utility, and output records.
-- Ran a control experiment with an alternative supported configuration to verify that the general processing mechanism worked.
-- Localized the failure to an auxiliary component's integration with downstream processing; development confirmed the defect.
-Demonstrated skills: production incident analysis, requirements reconstruction, laboratory reproduction, traffic generation, comparative testing, data-flow diagnostics, and cross-team technical investigation.
-2. Introducing a New Component: Resource Isolation and Service Integration Failures
-[Read the case study](cases/net_decoder-integration-failures.md)
-
-Problem: A newly introduced component encountered initialization, configuration, and resource conflicts even though the deployment procedure completed as specified.
-
-Investigation:
-- Reconstructed service dependencies and checked deployment requirements with development and deployment teams.
-- Analyzed application logs and Linux system journals using journalctl.
-- Compared isolated and concurrent service startup to reproduce integration-specific failures.
-- Investigated resource allocation conflicts involving isolated DPDK-based processing environments.
-- Used strace to localize a virtual network interface initialization failure and confirm an attempt to use an already occupied resource.
-- Related export module initialization failures to the broader resource integration problem.
-Demonstrated skills: Linux troubleshooting, system-call tracing, resource isolation analysis, integration testing, hypothesis-driven diagnosis, and architectural constraint validation.
-How to Read This Repository
-Start with either case study to see the evidence, diagnostic sequence, and findings. The methodology notes describe general approaches used in these investigations.
-Methodology
-System Modeling
-Building and refining working models of distributed systems.
-
-[Read](methodology/system-modeling.md)
-Data Entity Analysis
-Analyzing information lifecycles and transformations across system components.
-
-[Read](methodology/data-entity-analysis.md)
-Requirements Analysis
-Reconstructing expected behavior from incomplete and fragmented information sources.
-
-[Read](methodology/requirements-analysis.md)
+1. Resource Conflicts During Platform Integration
+Problem: Two services could initialize independently but failed during concurrent operation in isolated DPDK-based environments.
+Investigation: Reviewed application logs and `journalctl`, verified deployment requirements with development teams, compared isolated and concurrent startup, examined resource allocation, and used `strace` to localize an attempt to use an already occupied resource during virtual interface initialization.
+Outcome: Identified integration-level resource conflicts and established additional validation requirements for resource isolation and concurrent operation.
+Read the resource integration case study
+2. Missing Identification Metadata in Traffic Processing
+Problem: Traffic was processed and output records were generated, but required identification metadata was missing in a specific integration scenario.
+Investigation: Analyzed support evidence, reconstructed incomplete requirements, prepared a laboratory environment, reproduced the failure with generated traffic, examined logs and internal diagnostics, and compared the failing configuration with a working control scenario.
+Outcome: Localized the defect to the integration of an auxiliary session-processing component. The development team confirmed the findings.
+Read the traffic processing case study
+Investigation Methods
+Requirements reconstruction: Build a testable model from incomplete specifications and developer consultations.
+Environment validation: Distinguish deployment and configuration issues from runtime integration failures.
+Cross-layer diagnostics: Correlate application logs, Linux diagnostics, traffic input, and processing output.
+Controlled experiments: Compare failing and working scenarios to narrow the fault domain.
+Evidence-based reporting: Separate observations, verified findings, and unresolved implementation details.
+Methodology Notes
+System Modeling — constructing and revising models of distributed system behavior.
+Data Entity Analysis — tracking required information through processing stages.
+Requirements Analysis — reconstructing expected behavior from incomplete sources.
 Common Investigation Pattern
-1. Compare expected and observed behavior.
-2. Reconstruct requirements and system dependencies.
-3. Verify configuration and environment prerequisites.
-4. Reproduce the issue under controlled conditions.
-5. Collect and correlate diagnostic evidence.
-6. Use comparative experiments to isolate the failing component or integration.
-7. Validate conclusions with responsible engineers.
-8. Refine integration tests and acceptance criteria.
+Review expected and observed behavior.
+Reconstruct relevant requirements and system interactions.
+Validate the environment and reproduce the problem.
+Compare diagnostic evidence and test alternative hypotheses.
+Localize the failure and verify conclusions with development.
+Document implications for future integration testing.
 Repository Structure
+```text
 system-qa-case-studies/
 ├── README.md
 ├── cases/
-│   ├── traffic-processing-integration-failure.md
-│   └── net_decoder-integration-failures.md
+│   ├── net_decoder-integration-failures.md
+│   └── traffic-processing-integration-failure.md
 └── methodology/
     ├── system-modeling.md
     ├── data-entity-analysis.md
     └── requirements-analysis.md
+```
 Confidentiality
-These reports are anonymized. Internal service identifiers, product-specific interfaces, proprietary diagnostics, production configurations, customer data, and original traces are not published. The conclusions are limited to observations and outcomes confirmed during the investigations.
+These case studies omit internal product names, proprietary commands, customer data, production configurations, and implementation-specific details. The diagnostic methods and conclusions reflect actual investigations; undocumented implementation details are not inferred.
