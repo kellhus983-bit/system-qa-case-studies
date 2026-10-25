@@ -233,10 +233,47 @@ The findings established the need for additional integration checks:
 - Distinguish deployment correctness from runtime resource compatibility.
 - Use system-call tracing when application logs are insufficient to localize initialization failures.
 - Verify architectural assumptions with the responsible development teams.
-
+  
 **Confidentiality**
 
-The case study omits internal component names, production configuration, network topology, CPU identifiers, interface identifiers, and original diagnostic traces.
+The case study omits internal component names, production configuration, network topology, CPU identifiers, interface identifiers, and original diagnostic traces.                            
+### Export Module Initialization Failure
+
+**System context**
+
+The service consisted of interconnected processing modules communicating through a common data transfer protocol.
+
+The decoder was responsible for capturing and decoding traffic data. The decoded information was then transferred to the export module, which wrote the resulting records to disk-based logs.
+
+**Observed failure**
+
+During integration testing, application logs reported an export module initialization failure.
+
+The investigation established that this failure was related to the resource allocation and initialization problems identified during the broader service integration investigation.
+
+**Diagnostic verification**
+
+The following prerequisites were checked:
+
+- Correct deployment according to the specified installation requirements.
+- Valid service configuration.
+- Availability of CPU resources meeting the system requirements.
+- Allocation of the required memory.
+- Resource allocation and network device initialization.
+
+The deployment, configuration, CPU availability, and memory checks confirmed that the specified prerequisites had been satisfied.
+
+Further investigation identified conflicts involving resources required during service initialization.
+
+System-call tracing also confirmed an attempt to use an already occupied resource during virtual network interface initialization.
+
+**Conclusion**
+
+The export module initialization failure was associated with the resource conflicts identified during integration testing.
+
+The problem was therefore investigated as part of the service's resource initialization and integration behavior, rather than as an independent database or data export failure.
+
+Successful initialization of individual components did not guarantee that the complete processing pipeline could operate correctly under the combined resource configuration.
 
 ## Revised System Model
 
