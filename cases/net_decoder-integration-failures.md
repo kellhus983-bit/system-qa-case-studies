@@ -146,7 +146,6 @@ The goal was not simply to obtain answers but to reconstruct missing architectur
 
 ---
 ### Technical Investigation: Resource Conflicts in Isolated DPDK Environments
-### Technical Investigation: Resource Conflicts in Isolated DPDK Environments
 
 **Initial failure**
 
