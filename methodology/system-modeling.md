@@ -105,4 +105,4 @@ Together, they provide a framework for investigating complex distributed systems
 
 ## Related Case Studies
 
-- [Static Accounting Failure in a Traffic Coloring Environment](../cases/staticaccod-traffic-coloring.md)
+- [Integration Failure in a Network Traffic Processing Platform](../cases/traffic-processing-integration-failure.md)
